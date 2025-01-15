@@ -4,8 +4,8 @@ param (
     $sqlPassword = "",
     $output = "C:/temp/auto-masklet",
     $trustCert = $true,
-    $backupPath = "",
-    $databaseName = "Northwind",
+    $backupPath = "D:\SQLBackup\baseballdata_20241220.bak",
+    $databaseName = "BB",
     [switch]$autoContinue,
     [switch]$skipAuth
 )
