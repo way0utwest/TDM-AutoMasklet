@@ -58,20 +58,12 @@ Function New-SampleDatabases {
         [PSCredential]$SqlCredential
     )
 
+    $dbconn = "some connection"
     # If exists, drop the source and target databases
     Write-Verbose "  If exists, dropping the source and target databases"
-    if ($winAuth){
-        $dbsToDelete = Get-DbaDatabase -SqlInstance $sqlInstance -Database $sourceDb,$targetDb
-    }
-    else {
-        $dbsToDelete = Get-DbaDatabase -SqlInstance $sqlInstance -Database $sourceDb,$targetDb -SqlCredential $SqlCredential
-    }
-
-    forEach ($db in $dbsToDelete.Name){
-        Write-Verbose "    Dropping database $db"
-        $sql = "ALTER DATABASE $db SET single_user WITH ROLLBACK IMMEDIATE; DROP DATABASE $db;"
-        Invoke-DbaQuery -SqlInstance $sqlInstance -Query $sql -SqlCredential $SqlCredential
-    }
+    Write-Verbose "    Dropping database $sourceDb"
+    $sql = "drop database if exists $db"
+    Invoke-DbaQuery -SqlInstance $sqlInstance -Query $sql -SqlCredential $SqlCredential
 
     # Create the fullRestore and subset databases
     Write-Verbose "  Creating the fullRestore and subset databases"
